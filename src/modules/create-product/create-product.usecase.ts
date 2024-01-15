@@ -1,30 +1,28 @@
-import { prismaClient } from "../../database/prismaClient"
+import { prismaClient } from "../../database/prismaClient";
 
-type CreateProductRequest = {
-  name: string,
-  code: string,
-  quantity: number,
-  price: number
+interface CreateProductRequest {
+  name: string;
+  code: string;
+  quantity: number;
+  price: number;
 }
 
 export class CreateProductUsecase {
-  constructor() {}
-
-  async execute(data: CreateProductRequest) {
+  async execute(data: CreateProductRequest): Promise<CreateProductRequest> {
     const product = await prismaClient.product.findFirst({
       where: {
-        code: data.code
-      }
-    })
+        code: data.code,
+      },
+    });
 
-    if(product) throw new Error("Product already exists!")
+    if (product) throw new Error("Product already exists!");
 
     const productCreated = await prismaClient.product.create({
       data: {
-        ...data
-      }
-    })
+        ...data,
+      },
+    });
 
-    return productCreated
+    return productCreated;
   }
 }
