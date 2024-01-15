@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:3131
+
+# @name create_account
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Bicicleta",
+  "code": "3456712",
+  "quantity": 2,
+  "price": 500
+}
